@@ -1,6 +1,6 @@
 
 - gwt-site-webapp
- This project includes the server an client code of the GWT site
+ This project includes the server and client code of the GWT site
  It does not include the site content which is in the gwt-site project
  nor the utilities for uploading the documentation to GAE Servers which
  are in the gwt-site-uploader project.
