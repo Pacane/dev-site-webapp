@@ -16,6 +16,7 @@
         <appengine.target.version>1.9.5</appengine.target.version>
         <json.version>20140107</json.version>
         <commons-codec.version>1.9</commons-codec.version>
+        <checkstyle.version>6.0</checkstyle.version>
         <!-- javax -->
         <servlet.version>2.5</servlet.version>
 
@@ -30,6 +31,7 @@
         <war-plugin.version>2.4</war-plugin.version>
         <eclipse-plugin.version>2.9</eclipse-plugin.version>
         <appengine.plugin.version>1.9.4</appengine.plugin.version>
+        <maven-checkstyle-plugin.version>2.13</maven-checkstyle-plugin.version>
     </properties>
 
     <dependencies>
@@ -283,6 +285,48 @@
                                 </resource>
                             </resources>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+
+                <configuration>
+                    <configLocation>/checkstyle.xml</configLocation>
+                    <suppressionsLocation>/suppressions.xml</suppressionsLocation>
+                    <cacheFile>target/checkstyle-cachefile</cacheFile>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.arcbees.devsite</groupId>
+                        <artifactId>tools</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.sun</groupId>
+                                <artifactId>tools</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
